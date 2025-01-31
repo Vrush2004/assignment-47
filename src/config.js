@@ -101,6 +101,84 @@ const USERS = [
     "age": 31,
     "avatar": "https://i.pravatar.cc/150?img=17"
   },
+  {
+    "name": "Ritu Choudhary",
+    "city": "Chennai",
+    "age": 28,
+    "avatar": "https://i.pravatar.cc/150?img=18"
+  },
+  {
+    "name": "Gaurav Mishra",
+    "city": "Hyderabad",
+    "age": 24,
+    "avatar": "https://i.pravatar.cc/150?img=19"
+  },
+  {
+    "name": "Tanvi Bhatia",
+    "city": "Mumbai",
+    "age": 26,
+    "avatar": "https://i.pravatar.cc/150?img=20"
+  },
+  {
+    "name": "Deepak Sen",
+    "city": "Pune",
+    "age": 27,
+    "avatar": "https://i.pravatar.cc/150?img=21"
+  },
+  {
+    "name": "Megha Jain",
+    "city": "Delhi",
+    "age": 25,
+    "avatar": "https://i.pravatar.cc/150?img=22"
+  },
+  {
+    "name": "Saurabh Bansal",
+    "city": "Bangalore",
+    "age": 29,
+    "avatar": "https://i.pravatar.cc/150?img=23"
+  },
+  {
+    "name": "Nisha Tiwari",
+    "city": "Hyderabad",
+    "age": 31,
+    "avatar": "https://i.pravatar.cc/150?img=24"
+  },
+  {
+    "name": "Vikas Yadav",
+    "city": "Mumbai",
+    "age": 34,
+    "avatar": "https://i.pravatar.cc/150?img=25"
+  },
+  {
+    "name": "Swati Saxena",
+    "city": "Chennai",
+    "age": 23,
+    "avatar": "https://i.pravatar.cc/150?img=26"
+  },
+  {
+    "name": "Ravi Shankar",
+    "city": "Kolkata",
+    "age": 30,
+    "avatar": "https://i.pravatar.cc/150?img=27"
+  },
+  {
+    "name": "Simran Arora",
+    "city": "Delhi",
+    "age": 26,
+    "avatar": "https://i.pravatar.cc/150?img=28"
+  },
+  {
+    "name": "Manoj Tyagi",
+    "city": "Pune",
+    "age": 28,
+    "avatar": "https://i.pravatar.cc/150?img=29"
+  },
+  {
+    "name": "Kavya Nair",
+    "city": "Bangalore",
+    "age": 22,
+    "avatar": "https://i.pravatar.cc/150?img=30"
+  }
 ];
 
 export {USERS};
