@@ -5,6 +5,9 @@ import {MapPin, Cake} from "lucide-react";
 const App = () => {
   const [searchText, setSearchText] = useState("");
   const [filteredUsers, setFilteredUsers] = useState(USERS);
+  const [filterCity, setFilterCity] = useState("");
+  const [filterAge, setFilterAge] = useState("");
+  const [sortOrder, setSortOrder] = useState("asc");
 
   useEffect(() => {
     if(!searchText){
@@ -28,6 +31,43 @@ const App = () => {
   setFilteredUsers(tempFilteredUsers);
   }, [searchText]);
 
+  useEffect(() => {
+    if(!filterCity && !filterAge){
+      setFilteredUsers(USERS);
+      return;
+    }
+
+    const tempFilteredUsers = USERS.filter((user) =>{
+      if(filterCity && user.city === filterCity && filterAge && user.age === parseInt(filterAge)){
+        return true;
+      }
+
+      if(filterAge && !filterCity && user.age === parseInt(filterAge)){
+        return true;
+      }
+
+      if(filterCity && !filterAge && user.city === filterCity){
+        return true;
+      }
+
+      return false;
+    })
+
+    setFilteredUsers(tempFilteredUsers);
+  }, [filterCity, filterAge])
+
+  useEffect(()=> {
+    const tempSortedUser = filteredUsers.sort((a,b)=>{
+      if(sortOrder === 'asc'){
+        return a.name.localeCompare(b.name)
+      }else{
+        return b.name.localeCompare(a.name)
+      }
+    });
+
+    setFilteredUsers([...tempSortedUser])
+  },[sortOrder, filteredUsers])
+
   return (
     <div className='bg-slate-100 min-h-screen'>
         <h1 className='text-center text-4xl font-bold text-slate-800 py-10'>Search, Sort, Filter</h1>
@@ -47,20 +87,45 @@ const App = () => {
         <div className="flex justify-around">
           <div>
             <span>Filter By City: </span>
-            <select className="bg-white text-lg my-2 mx-5 rounded-lg px-5">
+            <select 
+              className="bg-white text-lg my-2 rounded-lg px-5"
+              value={filterCity}
+              onChange={(e) => setFilterCity.target.value}
+            >
               <option value="">All</option>
-              <option value="Mumbai">Mumbai</option>
-              <option value="Pune">Pune</option>
-              <option value="Delhi">Delhi</option>
+              {
+                USERS.map((user) => {
+                  return <option key={user.city} value={user.city}>{user.city}</option>
+                })
+              }
             </select>
           </div>
+
           <div>
-          <span>Filter By Age: </span>
-            <select>
+            <span>Filter By Age: </span>
+            <select 
+              className="bg-white text-lg my-2 rounded-lg px-5"
+              value={filterAge}
+              onChange={(e) => setFilterAge.target.value}
+            >
               <option value="">All</option>
-              <option value="Mumbai">Mumbai</option>
-              <option value="Pune">Pune</option>
-              <option value="Delhi">Delhi</option>
+              {
+                USERS.map((user) => {
+                  return <option key={user.age} value={user.age}>{user.age}</option>
+                })
+              }
+            </select>
+          </div>
+          
+          <div>
+            <span>Sort By Name: </span>
+            <select 
+              className="bg-white text-lg my-2 rounded-lg px-5"
+              value={sortOrder}
+              onChange={(e) => setSortOrder.target.value}
+            >
+              <option value="asc">Ascending</option>
+              <option value="desc">Descending</option>
             </select>
           </div>
         </div>
