@@ -10,87 +10,54 @@ const App = () => {
   const [sortOrder, setSortOrder] = useState("asc");
 
   useEffect(() => {
-    if(!searchText){
-      setFilteredUsers(USERS);
-      return;
-    }
-    const tempFilteredUsers = USERS.filter((user) => {
-      if(user.name.toLocaleLowerCase().includes(searchText)){
-        return true;
-      }
-      else if(user.city.toLocaleLowerCase().includes(searchText)){
-        return true;
-      }
-      else if(user.age.toString().includes(searchText)){
-        return true;
-      }
-      else{
-        return false;
-      }
-  })
-  setFilteredUsers(tempFilteredUsers);
-  }, [searchText]);
-
-  useEffect(() => {
-    if(!filterCity && !filterAge){
-      setFilteredUsers(USERS);
-      return;
-    }
-
-    const tempFilteredUsers = USERS.filter((user) =>{
-      if(filterCity && user.city === filterCity && filterAge && user.age === parseInt(filterAge)){
-        return true;
-      }
-
-      if(filterAge && !filterCity && user.age === parseInt(filterAge)){
-        return true;
-      }
-
-      if(filterCity && !filterAge && user.city === filterCity){
-        return true;
-      }
-
-      return false;
-    })
-
-    setFilteredUsers(tempFilteredUsers);
-  }, [filterCity, filterAge])
-
-  useEffect(()=> {
-    const tempSortedUser = filteredUsers.sort((a,b)=>{
-      if(sortOrder === 'asc'){
-        return a.name.localeCompare(b.name)
-      }else{
-        return b.name.localeCompare(a.name)
-      }
+    let tempFilteredUsers = USERS.filter((user) => {
+      return (
+        user.name.toLowerCase().includes(searchText.toLowerCase()) ||
+        user.city.toLowerCase().includes(searchText.toLowerCase()) ||
+        user.age.toString().includes(searchText)
+      );
     });
 
-    setFilteredUsers([...tempSortedUser])
-  },[sortOrder, filteredUsers])
+    if (filterCity) {
+      tempFilteredUsers = tempFilteredUsers.filter((user) => user.city === filterCity);
+    }
+
+    if (filterAge) {
+      tempFilteredUsers = tempFilteredUsers.filter((user) => user.age === parseInt(filterAge));
+    }
+
+    if (sortOrder === "asc") {
+      tempFilteredUsers.sort((a, b) => a.name.localeCompare(b.name));
+    } else {
+      tempFilteredUsers.sort((b, a) => a.name.localeCompare(b.name));
+    }
+
+    setFilteredUsers(tempFilteredUsers);
+  }, [searchText, filterCity, filterAge, sortOrder]);
 
   return (
     <div className='bg-slate-100 min-h-screen'>
-        <h1 className='text-center text-4xl font-bold text-slate-800 py-10'>Search, Sort, Filter</h1>
+        <h1 className='text-center md:text-4xl text-2xl font-bold text-slate-800 py-10'>Search, Sort, Filter</h1>
         <input 
           type="text" 
           placeholder="Search" 
-          className="w-2/3 p-2 bg-white mx-auto block rounded-lg text-2xl mb-10 focus:outline-none border border-gray-300" 
+          className="md:w-2/3 w-[90%] p-2 bg-white mx-auto block rounded-lg md:text-2xl text-xl mb-5 focus:outline-none border border-gray-300" 
           value={searchText}
           onChange={(e) => setSearchText(e.target.value.toLocaleLowerCase())}
         />
         {searchText ? (
           <p className="text-center mt-1">
-            {filteredUsers.length ===0 ? "Oops! No User Found..." : `Found {filteredUsers.length} users for search result...`}  
+            {filteredUsers.length ===0 ? "Oops! No User Found..." : `Found ${filteredUsers.length} users for search result...`}  
           </p>
         ) : null}
 
-        <div className="flex justify-around">
+        <div className="flex md:justify-around justify-center md:flex-row flex-col ml-10 md:ml-0">
           <div>
-            <span>Filter By City: </span>
+            <span className="font-bold md:text-xl">Filter By City: </span>
             <select 
-              className="bg-white text-lg my-2 rounded-lg px-5"
+              className="bg-white text-lg my-2 rounded-lg px-5 py-2 border border-gray-200 md:w-auto"
               value={filterCity}
-              onChange={(e) => setFilterCity.target.value}
+              onChange={(e) => setFilterCity(e.target.value)}
             >
               <option value="">All</option>
               {
@@ -102,11 +69,11 @@ const App = () => {
           </div>
 
           <div>
-            <span>Filter By Age: </span>
+            <span className="font-bold md:text-xl">Filter By Age: </span>
             <select 
-              className="bg-white text-lg my-2 rounded-lg px-5"
+              className="bg-white text-lg my-2 rounded-lg px-5 py-2 border border-gray-200 w-1/3 md:w-auto"
               value={filterAge}
-              onChange={(e) => setFilterAge.target.value}
+              onChange={(e) => setFilterAge(e.target.value)}
             >
               <option value="">All</option>
               {
@@ -118,11 +85,11 @@ const App = () => {
           </div>
           
           <div>
-            <span>Sort By Name: </span>
+            <span className="font-bold md:text-xl">Sort By Name: </span>
             <select 
-              className="bg-white text-lg my-2 rounded-lg px-5"
+              className="bg-white text-lg my-2 rounded-lg px-5 py-2 border border-gray-200 w-1/3 md:w-auto"
               value={sortOrder}
-              onChange={(e) => setSortOrder.target.value}
+              onChange={(e) => setSortOrder(e.target.value)}
             >
               <option value="asc">Ascending</option>
               <option value="desc">Descending</option>
@@ -130,7 +97,7 @@ const App = () => {
           </div>
         </div>
 
-        <div className="flex flex-wrap justify-around mt-10"> 
+        <div className="flex flex-wrap justify-around mt-5"> 
           {filteredUsers.map((userData, index) => {
               const {name, city, age, avatar} = userData;
 
